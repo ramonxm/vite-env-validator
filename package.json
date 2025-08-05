@@ -44,8 +44,8 @@
     "test:coverage": "jest --coverage",
     "clean": "rm -rf dist coverage",
     "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run build",
-    "version": "npm run build && git add -A dist",
+    "prepublishOnly": "pnpm run build",
+    "version": "pnpm run build && git add -A dist",
     "postversion": "git push && git push --tags",
     "prepare": "husky install",
     "release": "semantic-release"

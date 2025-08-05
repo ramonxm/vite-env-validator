@@ -31,7 +31,7 @@ fi
 echo "🚀 Iniciando release $VERSION_TYPE..."
 
 # Fazer bump da versão
-npm version $VERSION_TYPE --no-git-tag-version
+pnpm version $VERSION_TYPE --no-git-tag-version
 
 # Pegar a nova versão
 NEW_VERSION=$(node -p "require('./package.json').version")
