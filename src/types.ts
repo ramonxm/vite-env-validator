@@ -8,10 +8,12 @@ export interface ValidatorResult {
 }
 
 export interface Validator {
-  validate(env: Record<string, string>, schema: unknown): Promise<ValidatorResult[]>;
+  validate(
+    env: Record<string, string>,
+    schema: unknown
+  ): Promise<ValidatorResult[]>;
 }
 
-// Tipos específicos para cada validador
 export interface ZodValidationOptions {
   validator: 'zod';
   schema: z.ZodSchema;
@@ -19,7 +21,7 @@ export interface ZodValidationOptions {
 
 export interface YupValidationOptions {
   validator: 'yup';
-  schema: ObjectSchema<any>;
+  schema: ObjectSchema<Record<string, unknown>>;
 }
 
 export interface JoiValidationOptions {
@@ -27,5 +29,7 @@ export interface JoiValidationOptions {
   schema: Schema;
 }
 
-// Union type para todas as opções
-export type ValidationOptions = ZodValidationOptions | YupValidationOptions | JoiValidationOptions; 
+export type ValidationOptions =
+  | ZodValidationOptions
+  | YupValidationOptions
+  | JoiValidationOptions;
