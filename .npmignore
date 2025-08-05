@@ -1,0 +1,26 @@
+# Source files
+src/
+tsconfig.json
+tsup.config.ts
+
+# Development files
+.github/
+.vscode/
+*.log
+.DS_Store
+
+# Build artifacts (except dist)
+coverage/
+.nyc_output/
+
+# Dependencies
+node_modules/
+
+# Documentation
+README.md
+LICENSE
+
+# Examples
+example.ts
+index.html
+public/ 
