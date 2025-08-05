@@ -2,7 +2,16 @@
   "name": "@rxm/vite-env-validator",
   "version": "0.0.0",
   "description": "A Vite plugin for environment variable validation with support for Zod, Yup, and Joi",
-  "keywords": ["vite", "plugin", "environment", "validation", "zod", "yup", "joi", "env"],
+  "keywords": [
+    "vite",
+    "plugin",
+    "environment",
+    "validation",
+    "zod",
+    "yup",
+    "joi",
+    "env"
+  ],
   "author": "Ramon Xavier",
   "license": "MIT",
   "repository": {
@@ -51,17 +60,19 @@
     "release": "semantic-release"
   },
   "peerDependencies": {
-    "zod": "^3.0.0 || ^4.0.0",
+    "joi": "^17.0.0",
     "yup": "^1.0.0",
-    "joi": "^17.0.0"
+    "zod": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.0.0",
     "@commitlint/config-conventional": "^18.0.0",
+    "@jest/globals": "^30.0.5",
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/git": "^10.0.0",
     "@semantic-release/github": "^9.0.0",
     "@semantic-release/npm": "^10.0.0",
+    "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
