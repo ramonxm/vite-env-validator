@@ -231,6 +231,7 @@ If validation fails, the plugin will:
 
 ### Supported Versions
 
+- **Node.js**: `>=20.0.0`
 - **Zod**: `^3.0.0 || ^4.0.0`
 - **Yup**: `^1.0.0`
 - **Joi**: `^17.0.0`
