@@ -14,11 +14,11 @@ A Vite plugin for environment variable validation with support for multiple vali
 First, install the plugin:
 
 ```bash
-npm install vite-plugin-env-validator
+npm install vite-plugin-env-validator -D
 # or
-pnpm add vite-plugin-env-validator
+pnpm add vite-plugin-env-validator -D
 # or
-yarn add vite-plugin-env-validator
+yarn add vite-plugin-env-validator -D
 ```
 
 Then, install at least one of the validation libraries you want to use:
@@ -128,6 +128,31 @@ export default defineConfig({
   ],
 });
 ```
+
+### Direct Usage (Without Helpers)
+
+You can also use `validateEnv` directly without the helper functions by passing the validation options manually:
+
+```typescript
+import { defineConfig } from 'vite';
+import { validateEnv } from 'vite-plugin-env-validator';
+import { z } from 'zod';
+
+export default defineConfig({
+  plugins: [
+    validateEnv({
+      validator: 'zod',
+      schema: z.object({
+        VITE_API_URL: z.string().url(),
+        VITE_API_KEY: z.string().min(1),
+        VITE_DEBUG: z.boolean().default(false),
+      }),
+    }),
+  ],
+});
+```
+
+This approach gives you more flexibility and control over the validation configuration.
 
 ## Type Safety
 
