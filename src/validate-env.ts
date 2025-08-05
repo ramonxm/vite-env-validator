@@ -15,14 +15,16 @@ async function loadOptions(rootDir: string, inlineConfig: ValidationOptions) {
   const loader = createConfigLoader({
     cwd: rootDir,
     defaults: inlineConfig,
-    sources: [{ files: source, extensions: ['ts', 'cts', 'mts', 'js', 'cjs', 'mjs'] }],
+    sources: [
+      { files: source, extensions: ['ts', 'cts', 'mts', 'js', 'cjs', 'mjs'] },
+    ],
   });
 
   const result = await loader.load();
   const config = result.config;
 
   if (!config) {
-    error('❌ Missing configuration for vite-env-validator');
+    error('❌ Missing configuration for vite-plugin-env-validator');
     process.exit(1);
   }
 
@@ -30,14 +32,18 @@ async function loadOptions(rootDir: string, inlineConfig: ValidationOptions) {
   return config;
 }
 
-async function validateEnvConfig(userConfig: UserConfig, envConfig: ConfigEnv, inlineOptions: ValidationOptions) {
+async function validateEnvConfig(
+  userConfig: UserConfig,
+  envConfig: ConfigEnv,
+  inlineOptions: ValidationOptions
+) {
   log(`🔄 Starting environment validation for mode: ${envConfig.mode}`);
 
   const { normalizePath, loadEnv } = await import('vite');
   const rootDir = userConfig.root || cwd();
 
   const resolvedRoot = normalizePath(
-    userConfig.root ? path.resolve(userConfig.root) : process.cwd(),
+    userConfig.root ? path.resolve(userConfig.root) : process.cwd()
   );
 
   const envDir = userConfig.envDir
@@ -48,7 +54,10 @@ async function validateEnvConfig(userConfig: UserConfig, envConfig: ConfigEnv, i
   const env = loadEnv(envConfig.mode, envDir, userConfig.envPrefix);
   log(`🔢 Found ${Object.keys(env).length} environment variables`);
 
-  const options = (await loadOptions(rootDir, inlineOptions)) as ValidationOptions;
+  const options = (await loadOptions(
+    rootDir,
+    inlineOptions
+  )) as ValidationOptions;
 
   const validators = await getValidators();
   const validator = validators[options.validator];
@@ -65,23 +74,22 @@ async function validateEnvConfig(userConfig: UserConfig, envConfig: ConfigEnv, i
     process.exit(1);
   }
 
-  const variableDefinitions = (Array.isArray(variables) ? variables : []).reduce<Record<string, unknown>>(
-    (acc, variable) => {
-      const { key, value } = variable as { key: string; value: unknown };
-      if (key && value) {
-        acc[`import.meta.env.${key}`] = JSON.stringify(value);
-      }
-      return acc;
-    },
-    {},
-  );
+  const variableDefinitions = (
+    Array.isArray(variables) ? variables : []
+  ).reduce<Record<string, unknown>>((acc, variable) => {
+    const { key, value } = variable as { key: string; value: unknown };
+    if (key && value) {
+      acc[`import.meta.env.${key}`] = JSON.stringify(value);
+    }
+    return acc;
+  }, {});
 
   return { define: variableDefinitions };
 }
 
 export const validateEnv = (options: ValidationOptions): Plugin => {
   return {
-    name: 'vite-env-validator',
+    name: 'vite-plugin-env-validator',
     config: (config, env) => validateEnvConfig(config, env, options),
   };
 };

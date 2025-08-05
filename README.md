@@ -14,11 +14,11 @@ A Vite plugin for environment variable validation with support for multiple vali
 First, install the plugin:
 
 ```bash
-npm install @rxm/vite-env-validator
+npm install vite-plugin-env-validator
 # or
-pnpm add @rxm/vite-env-validator
+pnpm add vite-plugin-env-validator
 # or
-yarn add @rxm/vite-env-validator
+yarn add vite-plugin-env-validator
 ```
 
 Then, install at least one of the validation libraries you want to use:
@@ -67,7 +67,7 @@ The plugin dynamically loads only the validation libraries that are installed in
 
 ```typescript
 import { defineConfig } from 'vite';
-import { validateEnv, withZod, withYup, withJoi } from '@rxm/vite-env-validator';
+import { validateEnv, withZod, withYup, withJoi } from 'vite-plugin-env-validator';
 import { z } from 'zod';
 
 export default defineConfig({
@@ -89,7 +89,7 @@ export default defineConfig({
 
 ```typescript
 import { defineConfig } from 'vite';
-import { validateEnv, withYup } from '@rxm/vite-env-validator';
+import { validateEnv, withYup } from 'vite-plugin-env-validator';
 import * as yup from 'yup';
 
 export default defineConfig({
@@ -111,7 +111,7 @@ export default defineConfig({
 
 ```typescript
 import { defineConfig } from 'vite';
-import { validateEnv, withJoi } from '@rxm/vite-env-validator';
+import { validateEnv, withJoi } from 'vite-plugin-env-validator';
 import Joi from 'joi';
 
 export default defineConfig({
@@ -136,7 +136,7 @@ The plugin provides full TypeScript support with autocomplete for all validators
 ### Zod - Full Type Safety
 
 ```typescript
-import { withZod } from '@rxm/vite-env-validator';
+import { withZod } from 'vite-plugin-env-validator';
 import { z } from 'zod';
 
 // ✅ Full autocomplete and type safety
@@ -153,7 +153,7 @@ const options = withZod(schema);
 ### Yup - Full Type Safety
 
 ```typescript
-import { withYup } from '@rxm/vite-env-validator';
+import { withYup } from 'vite-plugin-env-validator';
 import * as yup from 'yup';
 
 const options = withYup(
@@ -171,7 +171,7 @@ const options = withYup(
 ### Joi - Full Type Safety
 
 ```typescript
-import { withJoi } from '@rxm/vite-env-validator';
+import { withJoi } from 'vite-plugin-env-validator';
 import Joi from 'joi';
 
 const options = withJoi(
@@ -198,7 +198,7 @@ The plugin supports configuration via:
 Create an `env.ts` file in your project root:
 
 ```typescript
-import { withZod } from '@rxm/vite-env-validator';
+import { withZod } from 'vite-plugin-env-validator';
 import { z } from 'zod';
 
 export default withZod(

@@ -1,5 +1,5 @@
 {
-  "name": "@rxm/vite-env-validator",
+  "name": "vite-plugin-env-validator",
   "version": "1.0.0",
   "description": "A Vite plugin for environment variable validation with support for Zod, Yup, and Joi",
   "keywords": [
@@ -14,9 +14,6 @@
   ],
   "author": "Ramon Xavier",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ramonxm/vite-env-validator.git"
