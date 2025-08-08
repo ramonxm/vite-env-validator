@@ -126,74 +126,6 @@ export default defineConfig({
 });
 ```
 
-
-
-## Type Safety
-
-The plugin provides full TypeScript support with autocomplete for all validators:
-
-### Zod - Full Type Safety
-
-```typescript
-import { validateEnv } from 'vite-plugin-env-validator';
-import { z } from 'zod';
-
-// ✅ Full autocomplete and type safety
-const schema = z.object({
-  VITE_API_URL: z.string().url(),
-  VITE_API_KEY: z.string().min(1),
-});
-
-const options = {
-  validator: 'zod' as const,
-  schema,
-};
-// options.validator is typed as 'zod'
-// options.schema is typed as z.ZodSchema
-```
-
-### Yup - Full Type Safety
-
-```typescript
-import { validateEnv } from 'vite-plugin-env-validator';
-import * as yup from 'yup';
-
-const schema = yup.object({
-  VITE_API_URL: yup.string().url().required(),
-  VITE_API_KEY: yup.string().min(1).required(),
-  VITE_DEBUG: yup.boolean().default(false),
-});
-
-const options = {
-  validator: 'yup' as const,
-  schema,
-};
-// ✅ options.validator is typed as 'yup'
-// ✅ options.schema is typed as ObjectSchema<any>
-// ✅ Full autocomplete for all Yup methods
-```
-
-### Joi - Full Type Safety
-
-```typescript
-import { validateEnv } from 'vite-plugin-env-validator';
-import Joi from 'joi';
-
-const schema = Joi.object({
-  VITE_API_URL: Joi.string().uri().required(),
-  VITE_API_KEY: Joi.string().min(1).required(),
-  VITE_DEBUG: Joi.boolean().default(false),
-});
-
-const options = {
-  validator: 'joi' as const,
-  schema,
-};
-// ✅ options.validator is typed as 'joi'
-// ✅ options.schema is typed as Schema
-// ✅ Full autocomplete for all Joi methods
-```
-
 ## Getting Better Autocomplete
 
 For the best TypeScript experience with full autocomplete, you can import the specific types from the validation libraries in your project:
@@ -205,10 +137,8 @@ import { defineConfig } from 'vite';
 import { validateEnv } from 'vite-plugin-env-validator';
 import { z } from 'zod';
 
-// Import the specific type for better autocomplete
-import type { z as ZodType } from 'zod';
 
-const schema: z.ZodSchema = z.object({
+const schema = z.object({
   VITE_API_URL: z.string().url(),
   VITE_API_KEY: z.string().min(1),
 });
@@ -217,7 +147,7 @@ export default defineConfig({
   plugins: [
     validateEnv({
       validator: 'zod',
-      schema, // Full autocomplete here
+      schema,
     }),
   ],
 });
@@ -230,10 +160,8 @@ import { defineConfig } from 'vite';
 import { validateEnv } from 'vite-plugin-env-validator';
 import * as yup from 'yup';
 
-// Import the specific type for better autocomplete
-import type { ObjectSchema } from 'yup';
 
-const schema: ObjectSchema<Record<string, unknown>> = yup.object({
+const schema = yup.object({
   VITE_API_URL: yup.string().url().required(),
   VITE_API_KEY: yup.string().min(1).required(),
 });
@@ -242,7 +170,7 @@ export default defineConfig({
   plugins: [
     validateEnv({
       validator: 'yup',
-      schema, // Full autocomplete here
+      schema,
     }),
   ],
 });
@@ -255,10 +183,8 @@ import { defineConfig } from 'vite';
 import { validateEnv } from 'vite-plugin-env-validator';
 import Joi from 'joi';
 
-// Import the specific type for better autocomplete
-import type { Schema } from 'joi';
 
-const schema: Schema = Joi.object({
+const schema = Joi.object({
   VITE_API_URL: Joi.string().uri().required(),
   VITE_API_KEY: Joi.string().min(1).required(),
 });
@@ -267,60 +193,16 @@ export default defineConfig({
   plugins: [
     validateEnv({
       validator: 'joi',
-      schema, // Full autocomplete here
+      schema,
     }),
   ],
 });
-```
-
-**Note**: This approach gives you the best of both worlds - the plugin doesn't include the validation libraries in its bundle (keeping it lightweight), but you still get full TypeScript support and autocomplete when you import the types in your project.
-
-const options = withJoi(
-  Joi.object({
-    VITE_API_URL: Joi.string().uri().required(),
-    VITE_API_KEY: Joi.string().min(1).required(),
-    VITE_DEBUG: Joi.boolean().default(false),
-  })
-);
-// ✅ options.validator is typed as 'joi'
-// ✅ options.schema is typed as Schema
-// ✅ Full autocomplete for all Joi methods
-```
-
-## Configuration
-
-The plugin supports configuration via:
-
-1. **Inline options** (recommended)
-2. **Configuration file** (`env.ts`, `env.js`, etc.)
-
-### Configuration File
-
-Create an `env.ts` file in your project root:
-
-```typescript
-import { withZod } from 'vite-plugin-env-validator';
-import { z } from 'zod';
-
-export default withZod(
-  z.object({
-    VITE_API_URL: z.string().url(),
-    VITE_API_KEY: z.string().min(1),
-    VITE_DEBUG: z.boolean().default(false),
-  })
-);
 ```
 
 ## Environment Variables
 
 The plugin will validate environment variables and make them available to your application:
 
-```typescript
-// These will be validated and typed
-console.log(import.meta.env.VITE_API_URL);
-console.log(import.meta.env.VITE_API_KEY);
-console.log(import.meta.env.VITE_DEBUG);
-```
 
 ## Error Handling
 
