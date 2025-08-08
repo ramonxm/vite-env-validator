@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-env-validator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Vite plugin for environment variable validation with support for Zod, Yup, and Joi",
   "keywords": [
     "vite",
