@@ -1,33 +1,34 @@
 import type { Validator, ValidatorResult } from '../types';
+import type { Schema } from 'joi';
+import type { ValidationError } from 'joi';
+import { logger } from '../logger';
 
 export class JoiValidator implements Validator {
   async validate(
     env: Record<string, string>,
-    schema: unknown
+    schema: Schema
   ): Promise<ValidatorResult[]> {
-    console.log('🔍 Validating environment variables with Joi...');
+    logger.info('🔍 Validating environment variables with Joi...');
 
     try {
-      const joiSchema = schema as any;
+      const joiSchema = schema;
       const result = await joiSchema.validateAsync(env, { abortEarly: false });
 
-      console.log('✅ Environment validation successful!');
+      logger.success('Environment validation successful!');
 
-      return Object.entries(result).map(([key, value]) => ({
-        key,
-        value,
-      }));
-    } catch (error: any) {
+      return Object.entries(result).map(([key, value]) => ({ key, value }));
+    } catch (err: unknown) {
+      const error = err as ValidationError;
+
       if (error.details) {
         for (const detail of error.details) {
-          console.error(`  - ${detail.path.join('.')}: ${detail.message}`);
+          logger.error(`  - ${detail.path.join('.')}: ${detail.message}`);
         }
       } else {
-        console.error(`  - ${error.message}`);
+        logger.error(`  - ${error.message}`);
       }
-      console.error(
-        '❌ Environment validation failed with error:',
-        error.message
+      logger.error(
+        `Environment validation failed with error: ${error.message}`
       );
       process.exit(1);
     }

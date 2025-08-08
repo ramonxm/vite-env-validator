@@ -1,4 +1,5 @@
 import type { Validator } from '../types';
+import { logger } from '../logger';
 
 const getValidators = async (): Promise<Record<string, Validator>> => {
   const validators: Record<string, Validator> = {};
@@ -7,7 +8,7 @@ const getValidators = async (): Promise<Record<string, Validator>> => {
     const { ZodValidator } = await import('./zod-validator');
     validators.zod = new ZodValidator();
   } catch (error) {
-    console.warn('⚠️ Zod is not installed.');
+    logger.warn('Zod is not installed.');
     process.exit(1);
   }
 
@@ -15,7 +16,7 @@ const getValidators = async (): Promise<Record<string, Validator>> => {
     const { YupValidator } = await import('./yup-validator');
     validators.yup = new YupValidator();
   } catch (error) {
-    console.warn('⚠️ Yup is not installed.');
+    logger.warn('Yup is not installed.');
     process.exit(1);
   }
 
@@ -23,7 +24,7 @@ const getValidators = async (): Promise<Record<string, Validator>> => {
     const { JoiValidator } = await import('./joi-validator');
     validators.joi = new JoiValidator();
   } catch (error) {
-    console.warn('⚠️ Joi is not installed.');
+    logger.warn('Joi is not installed.');
     process.exit(1);
   }
 

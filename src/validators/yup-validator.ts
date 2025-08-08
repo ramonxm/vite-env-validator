@@ -1,35 +1,38 @@
 import type { Validator, ValidatorResult } from '../types';
+import type { ObjectSchema, ValidationError } from 'yup';
+import { logger } from '../logger';
 
 export class YupValidator implements Validator {
   async validate(
     env: Record<string, string>,
-    schema: unknown
+    schema: ObjectSchema<Record<string, unknown>>
   ): Promise<ValidatorResult[]> {
-    console.log('🔍 Validating environment variables with Yup...');
+    logger.info('🔍 Validating environment variables with Yup...');
 
     try {
-      const yupSchema = schema as any;
+      const yupSchema = schema;
       const result = await yupSchema.validate(env, { abortEarly: false });
 
-      console.log('✅ Environment validation successful!');
+      logger.success('Environment validation successful!');
 
       return Object.entries(result).map(([key, value]) => ({
         key,
         value,
       }));
-    } catch (error: any) {
+    } catch (err: unknown) {
+      const error = err as ValidationError;
+
       if (error.inner) {
         for (const validationError of error.inner) {
-          console.error(
+          logger.error(
             `  - ${validationError.path}: ${validationError.message}`
           );
         }
       } else {
-        console.error(`  - ${error.message}`);
+        logger.error(`  - ${error.message}`);
       }
-      console.error(
-        '❌ Environment validation failed with error:',
-        error.message
+      logger.error(
+        `Environment validation failed with error: ${error.message}`
       );
       process.exit(1);
     }

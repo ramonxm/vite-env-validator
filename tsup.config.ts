@@ -7,7 +7,7 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  external: ['zod', 'vite', 'unconfig', 'yup', 'joi'],
+  external: ['vite'],
   target: 'node18',
   outDir: 'dist',
-}); 
+});
