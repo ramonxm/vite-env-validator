@@ -1,6 +1,16 @@
-# Vite Env Validator
+# Vite Plugin Env Validator
 
 A Vite plugin for environment variable validation with support for multiple validation libraries.
+
+> **Perfect for**: Vite projects that need type-safe environment variable validation at build time
+> 
+> **Supports**: Zod, Yup, and Joi validation libraries
+> 
+> **Features**: TypeScript support, zero config, lightweight, build-time validation
+
+[![npm version](https://img.shields.io/npm/v/vite-plugin-env-validator.svg)](https://www.npmjs.com/package/vite-plugin-env-validator)
+[![npm downloads](https://img.shields.io/npm/dm/vite-plugin-env-validator.svg)](https://www.npmjs.com/package/vite-plugin-env-validator)
+[![License](https://img.shields.io/npm/l/vite-plugin-env-validator.svg)](https://github.com/ramonxm/vite-env-validator/blob/main/LICENSE)
 
 ## Features
 
@@ -8,6 +18,9 @@ A Vite plugin for environment variable validation with support for multiple vali
 - 🎯 **Type Safety**: Full TypeScript support with autocomplete
 - ⚡ **Zero Config**: Works out of the box with sensible defaults
 - 🚀 **Fast**: Lightweight and performant
+- 🛡️ **Build-time Validation**: Catch environment errors early
+- 📦 **Peer Dependencies**: Only install what you need
+- 🎯 **Clear Error Messages**: Helpful debugging information
 
 ## Installation
 
@@ -51,6 +64,14 @@ yarn add joi
 ```
 
 **Note**: You only need to install the validation library you plan to use. The plugin uses peer dependencies, so you can choose which validator fits your needs best.
+
+## Why use this plugin?
+
+- **Type Safety**: Get full TypeScript support for your environment variables
+- **Build-time Validation**: Catch missing or invalid environment variables before deployment
+- **Multiple Validators**: Choose the validation library you prefer (Zod, Yup, or Joi)
+- **Zero Bundle Impact**: Only includes the validators you actually use
+- **Clear Errors**: Get helpful error messages when validation fails
 
 ### How it works
 
@@ -201,7 +222,20 @@ export default defineConfig({
 
 ## Environment Variables
 
-The plugin will validate environment variables and make them available to your application:
+The plugin will validate environment variables and make them available to your application. Invalid or missing environment variables will cause the build to fail with clear error messages.
+
+### Example Error Output
+
+```
+❌ Environment variable validation failed!
+
+Missing required environment variables:
+  - VITE_API_URL
+  - VITE_API_KEY
+
+Invalid environment variables:
+  - VITE_DEBUG: Expected boolean, received "true" (string)
+```
 
 
 ## Error Handling
@@ -219,6 +253,18 @@ If validation fails, the plugin will:
 - **Yup**: `^1.0.0`
 - **Joi**: `^17.0.0`
 
+## Related
+
+- [vite-plugin-env](https://github.com/liximomo/vite-plugin-env) - Environment variable loading for Vite
+- [vite-plugin-dotenv](https://github.com/fi3ework/vite-plugin-dotenv) - Load environment variables from .env files
+- [zod](https://github.com/colinhacks/zod) - TypeScript-first schema validation
+- [yup](https://github.com/jquense/yup) - Object schema validation
+- [joi](https://github.com/hapijs/joi) - Object schema description language and validator
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
 ## License
 
-MIT 
+MIT © [Ramon Xavier](https://github.com/ramonxm) 

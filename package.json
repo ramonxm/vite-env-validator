@@ -10,7 +10,13 @@
     "zod",
     "yup",
     "joi",
-    "env"
+    "env",
+    "typescript",
+    "build-time",
+    "type-safe",
+    "environment-variables",
+    "schema-validation",
+    "vite-plugin"
   ],
   "author": "Ramon Xavier",
   "license": "MIT",
