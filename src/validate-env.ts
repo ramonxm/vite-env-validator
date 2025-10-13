@@ -34,8 +34,14 @@ async function loadOptions(rootDir: string, inlineConfig: ValidationOptions) {
 async function validateEnvConfig(
   userConfig: UserConfig,
   envConfig: ConfigEnv,
-  inlineOptions: ValidationOptions
+  inlineOptions: ValidationOptions,
+  enabled: boolean
 ) {
+  if (!enabled) {
+    logger.info('Environment validation is disabled');
+    return;
+  }
+
   logger.info(`🔄 Starting environment validation for mode: ${envConfig.mode}`);
 
   const { normalizePath, loadEnv } = await import('vite');
@@ -86,9 +92,12 @@ async function validateEnvConfig(
   return { define: variableDefinitions };
 }
 
-export const validateEnv = (options: ValidationOptions): Plugin => {
+export const validateEnv = (
+  options: ValidationOptions,
+  enabled = true
+): Plugin => {
   return {
     name: 'vite-plugin-env-validator',
-    config: (config, env) => validateEnvConfig(config, env, options),
+    config: (config, env) => validateEnvConfig(config, env, options, enabled),
   };
 };
